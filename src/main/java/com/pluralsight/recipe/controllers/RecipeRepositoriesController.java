@@ -18,6 +18,8 @@ public class RecipeRepositoriesController {
 
     @GetMapping
     public List<Recipe> listRecipes(){
+
+        System.out.println("test");
         return repositories.findAll();
     }
 
