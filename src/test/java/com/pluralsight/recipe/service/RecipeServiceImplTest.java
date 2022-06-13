@@ -37,6 +37,7 @@ class RecipeServiceImplTest {
         ArrayList<Recipe> list =new ArrayList<>(); //Creation of ArrayList
         list.addAll(recipeData); //HashSet to ArrayList
 
+
         when(repository.findAll()).thenReturn(list);
 
         Set<Recipe> recipes_r =  recipeService.getRecipes();
