@@ -9,6 +9,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,9 +33,12 @@ class RecipeServiceImplTest {
         Recipe recipe = new Recipe();
         HashSet recipeData = new HashSet();
         recipeData.add(recipe);
+        
+        ArrayList<Recipe> list =new ArrayList<>(); //Creation of ArrayList
+        list.addAll(recipeData); //HashSet to ArrayList
 
-        when(repository.findAll()).thenReturn( recipeData.stream().toList());
-
+        when(repository.findAll()).thenReturn(list);
+        
         Set<Recipe> recipes_r =  recipeService.getRecipes();
         assertEquals(recipes_r.size(),1);
         verify(repository,times(1)).findAll();
