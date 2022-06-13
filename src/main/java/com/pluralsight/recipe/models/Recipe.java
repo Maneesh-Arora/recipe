@@ -4,11 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer","handler"})
-public class Recipe implements Serializable {
+public class Recipe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,15 +24,19 @@ public class Recipe implements Serializable {
     private Integer servings;
     private String source;
     private String url;
+
+    @Lob
+    @Column(length = 1000000)
     private String directions;
 
     @Enumerated(EnumType.STRING)
     private Difficulty difficulty;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
-    private Set<Ingredient> ingredients;
+    private Set<Ingredient> ingredients = new HashSet<>();
 
     @Lob
+    @Column(length = 15000)
     private Byte[] image;
     @OneToOne(cascade = CascadeType.ALL)
     private Notes notes;
@@ -40,7 +45,7 @@ public class Recipe implements Serializable {
     @JoinTable(name = "recipe_category",
     joinColumns = @JoinColumn(name = "recipe_id"),
     inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private Set<Category> categories;
+    private Set<Category> categories = new HashSet<>();
     public Recipe() {
     }
 
@@ -130,6 +135,7 @@ public class Recipe implements Serializable {
 
     public void setNotes(Notes notes) {
         this.notes = notes;
+        notes.setRecipe(this);
     }
 
     public Difficulty getDifficulty() {

@@ -1,10 +1,11 @@
 package com.pluralsight.recipe.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
-public class Category {
+public class Category  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

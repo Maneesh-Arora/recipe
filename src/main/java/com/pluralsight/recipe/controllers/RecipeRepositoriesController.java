@@ -1,20 +1,18 @@
 package com.pluralsight.recipe.controllers;
 
 import com.pluralsight.recipe.models.Recipe;
-import com.pluralsight.recipe.repositories.RecipeJPARepositories;
+import com.pluralsight.recipe.repositories.RecipeJPARepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/recipes")
 public class RecipeRepositoriesController {
 
     @Autowired
-    RecipeJPARepositories repositories;
+    RecipeJPARepository repositories;
 
     @GetMapping
     public List<Recipe> listRecipes(){

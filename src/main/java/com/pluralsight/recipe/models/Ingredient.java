@@ -1,10 +1,11 @@
 package com.pluralsight.recipe.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Entity
-public class Ingredient {
+public class Ingredient  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,6 +13,12 @@ public class Ingredient {
     private String description;
     private BigDecimal amount;
 
+    public Ingredient(String description, BigDecimal amount, UnitOfMeasure uom, Recipe recipe) {
+        this.description = description;
+        this.amount = amount;
+        this.recipe = recipe;
+        this.uom = uom;
+    }
 
     @ManyToOne
     private Recipe recipe;
@@ -19,11 +26,14 @@ public class Ingredient {
     @OneToOne
     private UnitOfMeasure uom;
 
+    public Ingredient() {
+
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
 
-    @Id
     public Long getId() {
         return id;
     }
