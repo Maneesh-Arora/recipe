@@ -30,6 +30,14 @@ public class Ingredient  {
 
     }
 
+    public UnitOfMeasure getUom() {
+        return uom;
+    }
+
+    public void setUom(UnitOfMeasure uom) {
+        this.uom = uom;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }

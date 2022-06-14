@@ -1,5 +1,7 @@
 package com.pluralsight.recipe.service;
 
+import com.pluralsight.recipe.converters.RecipeCommandToRecipe;
+import com.pluralsight.recipe.converters.RecipeToRecipeCommand;
 import com.pluralsight.recipe.models.Recipe;
 import com.pluralsight.recipe.repositories.RecipeJPARepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,10 +21,15 @@ class RecipeServiceImplTest {
     @Mock
     RecipeJPARepository repository;
 
+    @Mock
+    RecipeCommandToRecipe recipeCommandToRecipe;
+    @Mock
+    RecipeToRecipeCommand recipeToRecipeCommand;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        recipeService = new RecipeServiceImpl(repository);
+        recipeService = new RecipeServiceImpl(repository, recipeCommandToRecipe, recipeToRecipeCommand);
     }
 
     @Test
