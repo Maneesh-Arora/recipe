@@ -20,4 +20,9 @@ public class RecipeServiceImpl implements RecipeService {
         recipeJPARepository.findAll().iterator().forEachRemaining(recipeSet::add);
         return recipeSet;
     }
+
+    @Override
+    public Recipe findById(Long id) {
+        return recipeJPARepository.findById(id).orElse(null);
+    }
 }
