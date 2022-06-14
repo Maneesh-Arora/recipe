@@ -1,12 +1,16 @@
 package com.pluralsight.recipe.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+@Getter
+@Setter
 @Entity
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer","handler"})
 public class Recipe {
