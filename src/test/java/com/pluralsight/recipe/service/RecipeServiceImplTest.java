@@ -2,10 +2,13 @@ package com.pluralsight.recipe.service;
 
 import com.pluralsight.recipe.converters.RecipeCommandToRecipe;
 import com.pluralsight.recipe.converters.RecipeToRecipeCommand;
+import com.pluralsight.recipe.exceptions.NotFoundException;
 import com.pluralsight.recipe.models.Recipe;
 import com.pluralsight.recipe.repositories.RecipeJPARepository;
+import org.junit.Rule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.rules.ExpectedException;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -14,7 +17,11 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+
 class RecipeServiceImplTest {
+
+    @Rule
+    public final ExpectedException exception = ExpectedException.none();
 
     RecipeServiceImpl recipeService;
 
@@ -77,4 +84,23 @@ class RecipeServiceImplTest {
         //then
         verify(repository, times(1)).deleteById(anyLong());
     }
+
+    @Test
+    public void getRecipeByIdTestNotFound() throws Exception
+    {
+        Optional<Recipe> recipeOptional = Optional.empty();
+
+        when(repository.findById(anyLong())).thenReturn(recipeOptional);
+
+        try {
+            Recipe recipe = recipeService.findById(1L);
+        }
+        catch (NotFoundException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
+
+    }
+
+
 }

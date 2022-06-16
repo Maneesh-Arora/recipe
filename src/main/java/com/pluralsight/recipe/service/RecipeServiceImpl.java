@@ -3,12 +3,14 @@ package com.pluralsight.recipe.service;
 import com.pluralsight.recipe.commands.RecipeCommand;
 import com.pluralsight.recipe.converters.RecipeCommandToRecipe;
 import com.pluralsight.recipe.converters.RecipeToRecipeCommand;
+import com.pluralsight.recipe.exceptions.NotFoundException;
 import com.pluralsight.recipe.models.Recipe;
 import com.pluralsight.recipe.repositories.RecipeJPARepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 @Service
 public class RecipeServiceImpl implements RecipeService {
@@ -31,7 +33,12 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Recipe findById(Long id) {
-        return recipeJPARepository.findById(id).orElse(null);
+        Optional<Recipe> recipeOptional = recipeJPARepository.findById(id);
+        if(!recipeOptional.isPresent())
+        {
+            throw new NotFoundException("Recipe Not Found");
+        }
+        return recipeOptional.get();
     }
 
     @Transactional
