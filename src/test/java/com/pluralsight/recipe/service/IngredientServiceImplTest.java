@@ -3,6 +3,7 @@ package com.pluralsight.recipe.service;
 import com.pluralsight.recipe.commands.IngredientCommand;
 import com.pluralsight.recipe.converters.IngredientCommandToIngredient;
 import com.pluralsight.recipe.converters.IngredientToIngredientCommand;
+import com.pluralsight.recipe.converters.UnitOfMeasureCommandToUnitOfMeasure;
 import com.pluralsight.recipe.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import com.pluralsight.recipe.models.Ingredient;
 import com.pluralsight.recipe.models.Recipe;
@@ -12,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
 
@@ -21,24 +23,27 @@ import static org.mockito.Mockito.*;
 
 public class IngredientServiceImplTest {
 
-    private final IngredientToIngredientCommand ingredientToIngredientCommand;
+
+    IngredientToIngredientCommand ingredientToIngredientCommand;
 
     @Mock
     RecipeJPARepository recipeRepository;
     @Mock
     UnitOfMeasureJPARepository unitOfMeasureRepository;
-    private final IngredientCommandToIngredient ingredientCommandToIngredient;
+
+    @Autowired
+    IngredientCommandToIngredient ingredientCommandToIngredient;
+
+    @Autowired
     IngredientService ingredientService;
 
     //init converters
-    public IngredientServiceImplTest(IngredientCommandToIngredient ingredientCommandToIngredient) {
-        this.ingredientCommandToIngredient = ingredientCommandToIngredient;
-        this.ingredientToIngredientCommand = new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand());
-    }
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
+        this.ingredientCommandToIngredient = new IngredientCommandToIngredient(new UnitOfMeasureCommandToUnitOfMeasure());
+        this.ingredientToIngredientCommand = new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand());
 
         ingredientService = new IngredientServiceImpl(ingredientToIngredientCommand, ingredientCommandToIngredient,
                 recipeRepository,   unitOfMeasureRepository);
